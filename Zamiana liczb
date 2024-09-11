@@ -1,0 +1,224 @@
+1. Konwersja za pomocą pętli while i wypisywanie na konsoli
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    int liczba, reszta;
+    cout << "Podaj liczbe dziesietna: ";
+    cin >> liczba;
+    
+    while (liczba > 0) {
+        reszta = liczba % 2;  // Wyliczenie reszty z dzielenia liczby przez 2
+        cout << reszta;       // Wypisanie tej reszty (binarny bit)
+        liczba = liczba / 2;  // Podział liczby przez 2, aby uzyskać kolejną część binarną
+    }
+    
+    return 0;
+}
+Opis:
+
+Program przyjmuje liczbę dziesiętną od użytkownika.
+W pętli while, liczba jest dzielona przez 2, a reszta z tego dzielenia (czyli bit) jest wypisywana na ekran.
+Wynik zostanie wyświetlony w odwrotnej kolejności, ponieważ pierwsze bity, które są wypisywane, odpowiadają najmniej znaczącym bitom.
+2. Konwersja z użyciem tablicy do odwrócenia wyniku
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    int liczba, reszta;
+    int binarnie[32], i = 0;
+
+    cout << "Podaj liczbe dziesietna: ";
+    cin >> liczba;
+
+    while (liczba > 0) {
+        binarnie[i] = liczba % 2;  // Zapisanie reszty w tablicy
+        liczba = liczba / 2;       // Dzielenie liczby przez 2
+        i++;                       // Zwiększenie indeksu tablicy
+    }
+
+    for (int j = i - 1; j >= 0; j--)  // Pętla odwracająca kolejność bitów
+        cout << binarnie[j];          // Wypisanie wyniku w prawidłowej kolejności
+
+    return 0;
+}
+Opis:
+
+Tutaj reszty z dzielenia są przechowywane w tablicy.
+Po zakończeniu pętli while, druga pętla for wypisuje wartości z tablicy od końca, co odwraca kolejność bitów i zapewnia poprawne wyświetlenie liczby binarnej.
+3. Konwersja za pomocą funkcji rekurencyjnej
+
+#include <iostream>
+using namespace std;
+
+void konwersja(int liczba) {
+    if (liczba > 0) {
+        konwersja(liczba / 2);  // Rekurencyjne wywołanie funkcji z liczba/2
+        cout << liczba % 2;     // Wypisanie reszty z dzielenia przez 2
+    }
+}
+
+int main() {
+    int liczba;
+    cout << "Podaj liczbe dziesietna: ";
+    cin >> liczba;
+
+    konwersja(liczba);
+
+    return 0;
+}
+Opis:
+
+Funkcja konwersja wywołuje samą siebie, dopóki liczba jest większa od 0.
+W każdym kroku funkcja dzieli liczbę przez 2 i wypisuje resztę z tego dzielenia.
+Dzięki rekurencji, wynik jest automatycznie wypisywany w poprawnej kolejności.
+4. Konwersja z dodatkowym sprawdzeniem zera
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    int liczba;
+    cout << "Podaj liczbe dziesietna: ";
+    cin >> liczba;
+
+    if (liczba == 0)
+        cout << "0";  // Sprawdzanie przypadku, gdy liczba to 0
+    else {
+        while (liczba > 0) {
+            cout << liczba % 2;  // Wypisanie reszty
+            liczba = liczba / 2; // Dzielenie liczby przez 2
+        }
+    }
+    
+    return 0;
+}
+Opis:
+
+Program sprawdza, czy liczba jest równa zero i w takim przypadku od razu wypisuje "0".
+W przeciwnym razie działa identycznie jak pierwszy program, z tą różnicą, że nie obsługuje liczb negatywnych.
+5. Konwersja i zapis do ciągu znaków
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+    int liczba;
+    string binarnie = "";
+
+    cout << "Podaj liczbe dziesietna: ";
+    cin >> liczba;
+
+    while (liczba > 0) {
+        binarnie = to_string(liczba % 2) + binarnie;  // Dopisywanie bitów na początek ciągu
+        liczba = liczba / 2;
+    }
+
+    cout << binarnie;  // Wypisanie pełnej liczby binarnej
+    
+    return 0;
+}
+Opis:
+
+Program buduje wynik jako ciąg znaków (string), co pozwala na odwracanie kolejności bez użycia tablicy.
+Każdy nowy bit jest dodawany na początku ciągu znaków, co automatycznie odwraca wynik.
+6. Konwersja za pomocą bitów
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    int liczba;
+    cout << "Podaj liczbe dziesietna: ";
+    cin >> liczba;
+
+    for (int i = 31; i >= 0; i--) {
+        cout << ((liczba >> i) & 1);  // Przesunięcie bitowe i sprawdzenie wartości bitu
+    }
+
+    return 0;
+}
+Opis:
+
+Program wykorzystuje operacje na bitach, aby wypisać każdy bit liczby od najbardziej znaczącego do najmniej znaczącego.
+Przesunięcie bitowe (>>) przesuwa bity w liczbie w prawo, a operator AND (&) sprawdza wartość danego bitu.
+7. Konwersja z funkcją pomocniczą toBinary
+
+#include <iostream>
+using namespace std;
+
+string toBinary(int liczba) {
+    string binarnie = "";
+    while (liczba > 0) {
+        binarnie = to_string(liczba % 2) + binarnie;  // Dopisywanie bitów na początek
+        liczba = liczba / 2;
+    }
+    return binarnie;
+}
+
+int main() {
+    int liczba;
+    cout << "Podaj liczbe dziesietna: ";
+    cin >> liczba;
+
+    cout << toBinary(liczba);  // Wywołanie funkcji i wypisanie wyniku
+
+    return 0;
+}
+Opis:
+
+Tutaj konwersja do postaci binarnej została wyodrębniona do funkcji toBinary.
+Program główny jedynie wywołuje tę funkcję i wypisuje wynik.
+8. Konwersja z użyciem pętli do-while
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    int liczba;
+    cout << "Podaj liczbe dziesietna: ";
+    cin >> liczba;
+
+    if (liczba == 0) {
+        cout << "0";
+    } else {
+        do {
+            cout << liczba % 2;  // Wypisanie reszty
+            liczba = liczba / 2; // Dzielenie przez 2
+        } while (liczba > 0);  // Pętla działa co najmniej raz
+    }
+
+    return 0;
+}
+Opis:
+
+Pętla do-while gwarantuje, że pętla wykona się co najmniej raz, nawet jeśli liczba wynosi 0.
+Jest to alternatywa dla pętli while, ale logika konwersji jest identyczna.
+9. Konwersja z użyciem stack (stos)
+
+#include <iostream>
+#include <stack>
+using namespace std;
+
+int main() {
+    int liczba;
+    stack<int> binarnie;
+
+    cout << "Podaj liczbe dziesietna: ";
+    cin >> liczba;
+
+    while (liczba > 0) {
+        binarnie.push(liczba % 2);  // Przechowywanie reszt na stosie
+        liczba = liczba / 2;
+    }
+
+    while (!binarnie.empty()) {  // Wypisywanie bitów ze stosu w odwrotnej kolejności
+        cout << binarnie.top();
+        binarnie.pop();
+    }
+
+    return 0;
+}
